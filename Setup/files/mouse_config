@@ -1,0 +1,7 @@
+Section "InputClass"
+  Identifier "MouseAccSpeed"
+  MatchDriver "libinput"
+  MatchProduct "SteelSeries"
+  Option "AccelSpeed" "-0.7"
+EndSection
+
