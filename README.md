@@ -14,9 +14,12 @@ and not as `./<name>.sh`, since it allows for creation of temporary bash session
 - `rebuild.sh` - nvim into `/etc/nixos/` then rebuild NixOS after changes.
 - `oben.sh` - zip obsidian vault, encrypt with `ansible-vault` and push to github repository.
 - `obde.sh` - remove current vault, pull vault from github, decrypt and unzip it.
+`rebuild.sh` need update, I want to have push to repository with nix config every time system is rebuilt. Futhermore I it to also copy `init.lua` and push it with it. Therefore there is a need to write scripts for both pushing and then pulling the OS state.
 
 ## Setup
 Scripts that help with setup on new machine. 
 - `git_setup.sh` - script to setup git on new machine. Here main has ssh keys enctypted with `ansible vault`.
 - `ubuntu_wm_stup.sh` - old script to setup basic i3wm with tools I use on ubuntu - DEPRECATED
 
+## VM-Instalation
+This directory will contain scripts to automate setup of fresh OS instalations or VMs.
