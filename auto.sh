@@ -9,6 +9,9 @@ if [[ "$1" == "-p" ]]; then
     else 
         echo "Usage: auto -p <commit message>"
     fi
+
+elif [[ "$1" == "-s" ]]; then
+    git status
 else
     nvim
     rm -rf ~/Scripts
