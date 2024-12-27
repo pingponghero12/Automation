@@ -30,9 +30,9 @@ fi
 # Partitioning
 echo "Partitioning $DISK...\n"
 parted "$DISK" --script -- mklabel msdos
-parted "$DISK" -- script -- mkpart primary 1MiB -8GiB
-parted "$DISK" -- script -- set 1 boot on
-parted "$DISK" -- script -- mkpart primary linux-swap -8GiB 100%
+parted "$DISK" --script -- mkpart primary 1MiB -8GiB
+parted "$DISK" --script -- set 1 boot on
+parted "$DISK" --script -- mkpart primary linux-swap -8GiB 100%
 
 # Formatting
 echo "Formatting partitions...\n"
@@ -57,7 +57,7 @@ swapon /dev/disk/by-label/swap
 # Generate configuration
 echo "Generating NixOS configuration...\n"
 nixos-generate-config --root /mnt
-sed "s|# boot.loader.grub.device = \"/dev/sda\"|boot.loader.grub.device = \"/dev/$DISK\"|" /mnt/etc/nixos/configuration.nix
+sed -i "s|# boot.loader.grub.device = \"/dev/sda\"|boot.loader.grub.device = \"/dev/$DISK\"|" /mnt/etc/nixos/configuration.nix
 
 # Change configuration
 read -p "Do you want to edit the configuration? (y/N): " edit_conf
