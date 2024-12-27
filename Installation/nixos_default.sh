@@ -2,10 +2,23 @@
 
 set -euo pipefail
 
-sudo -i
+error() {
+    echo "Error: $1" >&2
+    exit 1
+}
+
+# Check if root
+if [[ $EUID -ne 0 ]]; then
+    error "This script requires you to open it with sudo"
+fi
 
 # Default disk set to sda
 DISK=${1:-/dev/sda}
+
+# Validate disk existence
+if [ ! -b "$DISK" ]; then
+    error "Disk $DISK does not exist. Please provide a valid disk."
+fi
 
 # Confirm disk selection
 read -p "Proceed with disk partitioning on $DISK? All data will be lost. (y/N): " confirm
@@ -28,6 +41,14 @@ mkswap -L swap "${DISK}2"
 
 # Mounting
 echo "Mounting root partition...\n"
+# I had script stop here for some reason, so we'll double check
+mkdir -p /mnt
+for x in {1..5}; do
+    if mountpoint -q /mnt; then
+        break
+    fi
+    sleep 1
+done
 mount /dev/disk/by-label/nixos /mnt
 
 echo "Enabling swap...\n"
@@ -36,6 +57,7 @@ swapon /dev/disk/by-label/swap
 # Generate configuration
 echo "Generating NixOS configuration...\n"
 nixos-generate-config --root /mnt
+sed "s|# boot.loader.grub.device = \"/dev/sda\"|boot.loader.grub.device = \"/dev/$DISK\"|" /mnt/etc/nixos/configuration.nix
 
 # Change configuration
 read -p "Do you want to edit the configuration? (y/N): " edit_conf
