@@ -57,7 +57,7 @@ swapon /dev/disk/by-label/swap
 # Generate configuration
 echo "Generating NixOS configuration...\n"
 nixos-generate-config --root /mnt
-sed -i "s|# boot.loader.grub.device = \"/dev/sda\"|boot.loader.grub.device = \"/dev/$DISK\"|" /mnt/etc/nixos/configuration.nix
+sed -i "s|# boot.loader.grub.device = \"/dev/sda\"|boot.loader.grub.device = \"$DISK\"|" /mnt/etc/nixos/configuration.nix
 
 # Change configuration
 read -p "Do you want to edit the configuration? (y/N): " edit_conf
