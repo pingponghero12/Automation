@@ -11,10 +11,11 @@ bash <name>.sh
 and not as `./<name>.sh`, since it allows for creation of temporary bash session, which after end of scipt will return user to normal. That is why I can use `cd` freely in the code.
 
 - `ob.sh` - open nvim in obsidian valut, and if obsidian is not running then run `obsidian`.
-- `rebuild.sh` - nvim into `/etc/nixos/` then rebuild NixOS after changes.
+- `rebuild.sh` - nvim into `/etc/nixos/` then rebuild NixOS and push to nix-config repository.
+- `nixup.sh` - pull from nix-config repository and copy it to `/etc/nixos`
 - `oben.sh` - zip obsidian vault, encrypt with `ansible-vault` and push to github repository.
 - `obde.sh` - remove current vault, pull vault from github, decrypt and unzip it.
-`rebuild.sh` need update, I want to have push to repository with nix config every time system is rebuilt. Futhermore I it to also copy `init.lua` and push it with it. Therefore there is a need to write scripts for both pushing and then pulling the OS state.
+In future I want to also include copying `init.lua` in `rebuild`.
 
 ## Setup
 Scripts that help with setup on new machine. 
