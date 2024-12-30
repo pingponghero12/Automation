@@ -17,8 +17,14 @@ and not as `./<name>.sh`, since it allows for creation of temporary bash session
 - `obde.sh` - remove current vault, pull vault from github, decrypt and unzip it.
 In future I want to also include copying `init.lua` in `rebuild`.
 
+## Installation
+Directory with scripts that automate manual installation of OSes. Currently only avaible is for NixOS.
+
+- `nixos_default.sh` - install nixos with default config for bios. Tested and working.
+
+
 ## Setup
-Scripts that help with setup on new machine. 
+Old scripts that help with setup on new machine. 
 - `git_setup.sh` - script to setup git on new machine. Here main has ssh keys enctypted with `ansible vault`.
 - `ubuntu_wm_stup.sh` - old script to setup basic i3wm with tools I use on ubuntu - DEPRECATED
 
