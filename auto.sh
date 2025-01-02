@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 cd ~/Documents/Automation/
 if [[ "$1" == "-p" ]]; then
     if [ -n "$2" ]; then

@@ -2,7 +2,6 @@
 
 set -e  # Stop script on any errors
 
-
 # Get scripts local path
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 

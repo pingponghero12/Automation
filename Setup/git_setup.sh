@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Ensure .ssh exits
 mkdir -p ~/.ssh
 

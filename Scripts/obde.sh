@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 cd ~/Documents/Obsidian/
 rm -rf ~/Documents/Obsidian/Obsidian/
 git reset --hard
