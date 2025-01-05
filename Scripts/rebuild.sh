@@ -5,6 +5,8 @@ set -e
 if [[ $1 != "-v" ]]; then
     sudo nvim /etc/nixos/
     cd ~/.config/nixos-config
+    cp ~/.config/nvim/init.lua ./nvim
+
     if sudo nixos-rebuild switch --flake /etc/nixos#hostname; then
         sudo rm -rf ./nixos
         sudo cp -r /etc/nixos ./

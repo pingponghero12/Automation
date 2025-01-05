@@ -7,4 +7,5 @@ touch .gitignore
 touch src/main.cpp
 
 cp ~/Scripts/files/CMakeLists.txt ./
+cp ~/Scripts/files/startcpp.nix ./shell.nix
 nvim ./CMakeLists.txt
