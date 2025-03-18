@@ -3,7 +3,7 @@
 set -e
 
 cd ~/Documents/Obsidian/
-rm obsidian.zip
+rm -f obsidian.zip
 zip -r obsidian.zip Obsidian/
 ansible-vault encrypt obsidian.zip
 
