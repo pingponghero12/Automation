@@ -5,6 +5,7 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
 
+
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
@@ -73,6 +74,7 @@ vim.opt.scrolloff = 10
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.g.loaded_treesitter = 1
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -166,6 +168,89 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
+  {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    opts = {
+      menu = {
+        width = vim.api.nvim_win_get_width(0) - 4,
+        height = 10,
+      },
+      settings = {
+        save_on_toggle = true,
+      },
+    },
+    keys = function()
+      local keys = {
+        {
+          "<leader>H",
+          function()
+            require("harpoon"):list():add()
+          end,
+          desc = "Harpoon File",
+        },
+        {
+          "<leader>j",
+          function()
+            local harpoon = require("harpoon")
+            harpoon.ui:toggle_quick_menu(harpoon:list())
+          end,
+          desc = "Harpoon Quick Menu",
+        },
+      }
+
+      for i = 1, 9 do
+        table.insert(keys, {
+          "<leader>" .. i,
+          function()
+            require("harpoon"):list():select(i)
+          end,
+          desc = "Harpoon to File " .. i,
+        })
+      end
+      return keys
+    end,
+  },
+  {
+    "lervag/vimtex",
+    lazy = false,     -- we don't want to lazy load VimTeX
+    -- tag = "v2.15", -- uncomment to pin to a specific release
+    init = function()
+      -- PDF Viewer
+      vim.g.vimtex_view_method = "xreader"  -- Changed from xreader (zathura works better with i3)
+      
+      -- Compiler settings
+      vim.g.vimtex_compiler_method = 'latexmk'
+      
+      -- Error/Warning quickfix window settings
+      vim.g.vimtex_quickfix_mode = 1  -- Open quickfix window automatically on errors
+      vim.g.vimtex_quickfix_open_on_warning = 1  -- Also open on warnings
+      
+      -- Auto-open quickfix window on compilation errors
+      vim.g.vimtex_quickfix_autoclose_after_keystrokes = 1
+      
+      -- Improve error messages
+      vim.g.vimtex_quickfix_ignore_filters = {
+        -- Add patterns here if you want to ignore certain warnings
+      }
+      
+      -- Enable compilation on save (optional)
+      vim.g.vimtex_compiler_latexmk = {
+        continuous = 0,
+        callback = 1,
+        build_dir = '',
+        options = {
+          '-pdf',
+          '-verbose',
+          '-file-line-error',
+          '-synctex=1',
+          '-shell-escape',
+          '-interaction=nonstopmode',
+        },
+      }
+    end
+  },
+
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
@@ -948,3 +1033,38 @@ require('lazy').setup({
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
+
+-- Code style
+local function set_fg(group, color)
+  vim.api.nvim_set_hl(0, group, { fg = color })
+end
+
+local red    = "#ff5555"
+local purple = "#bd93f9"
+
+set_fg("Type", red)        -- For int, float, etc.
+set_fg("StorageClass", red) -- For const, static, extern, etc.
+set_fg("Keyword", red)     -- For const, if, else, etc.
+set_fg("Function", purple) -- Function names and calls
+
+set_fg("@function", purple)
+set_fg("@function.call", purple)
+set_fg("@type", red)
+set_fg("@keyword", red)
+set_fg("@storageclass", red)
+set_fg("@variable.builtin", red)  -- builtin variables in python/cpp/cmake
+
+set_fg("@cmake.variable", purple)
+set_fg("@cmake.keyword", purple)
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "cmake",
+  callback = function()
+    local red = "#ff5555"
+    vim.api.nvim_set_hl(0, "@function.cmake", { fg = purple })
+    vim.api.nvim_set_hl(0, "@function.builtin.cmake", { fg = red })
+    vim.api.nvim_set_hl(0, "@_function.cmake", { fg = red })
+    -- If you want to affect all functions in cmake, also:
+    vim.api.nvim_set_hl(0, "@function", { fg = red })
+  end,
+})

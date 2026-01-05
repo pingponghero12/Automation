@@ -195,11 +195,7 @@ bar {
 bindsym $mod+e exec thunar
 
 # Startup 
-exec_always feh --bg-scale /home/prlpnrpph512/Pictures/tropical1.jpg
-#exec_always feh --bg-scale /home/prlpnrpph512/Pictures/spiderman2099holoGF.jpeg
-#exec_always feh --bg-scale /home/pnrh1/Pictures/anime-anime-girls-artwork-clouds-wallpaper-b920789d71ca5d1b76f7980f5051667d.jpg
-
-#exec_always feh --bg-scale /home/prlpnrpph512/Pictures/spiderman2099holoGF.jpeg
+exec_always feh --bg-fill /home/prlpnrpph512/Pictures/Warszawa_1975_WDC_42783.jpeg
 
 exec --no-startup-id i3msg 'workspace 2:Web; exect firefox'
 exec --no-startup-id clipmenud
