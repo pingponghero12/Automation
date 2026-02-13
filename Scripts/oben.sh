@@ -8,5 +8,5 @@ zip -r obsidian.zip Obsidian/
 ansible-vault encrypt obsidian.zip
 
 git add -A
-git commit -m "lalala"
+git commit -m "Automated commit with obsidian encrypt command."
 git push origin main
